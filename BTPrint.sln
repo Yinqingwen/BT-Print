@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BTPrint", "BTPrint\BTPrint.vcproj", "{F2B5D693-E8E9-4C14-A5D3-7B4B76E47525}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|omap3530 (ARMV4I) = Debug|omap3530 (ARMV4I)
+		Debug|Pocket PC 2003 (ARMV4) = Debug|Pocket PC 2003 (ARMV4)
+		Release|omap3530 (ARMV4I) = Release|omap3530 (ARMV4I)
+		Release|Pocket PC 2003 (ARMV4) = Release|Pocket PC 2003 (ARMV4)
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F2B5D693-E8E9-4C14-A5D3-7B4B76E47525}.Debug|omap3530 (ARMV4I).ActiveCfg = Debug|omap3530 (ARMV4I)
+		{F2B5D693-E8E9-4C14-A5D3-7B4B76E47525}.Debug|omap3530 (ARMV4I).Build.0 = Debug|omap3530 (ARMV4I)
+		{F2B5D693-E8E9-4C14-A5D3-7B4B76E47525}.Debug|omap3530 (ARMV4I).Deploy.0 = Debug|omap3530 (ARMV4I)
+		{F2B5D693-E8E9-4C14-A5D3-7B4B76E47525}.Debug|Pocket PC 2003 (ARMV4).ActiveCfg = Debug|Pocket PC 2003 (ARMV4)
+		{F2B5D693-E8E9-4C14-A5D3-7B4B76E47525}.Debug|Pocket PC 2003 (ARMV4).Build.0 = Debug|Pocket PC 2003 (ARMV4)
+		{F2B5D693-E8E9-4C14-A5D3-7B4B76E47525}.Debug|Pocket PC 2003 (ARMV4).Deploy.0 = Debug|Pocket PC 2003 (ARMV4)
+		{F2B5D693-E8E9-4C14-A5D3-7B4B76E47525}.Release|omap3530 (ARMV4I).ActiveCfg = Release|omap3530 (ARMV4I)
+		{F2B5D693-E8E9-4C14-A5D3-7B4B76E47525}.Release|omap3530 (ARMV4I).Build.0 = Release|omap3530 (ARMV4I)
+		{F2B5D693-E8E9-4C14-A5D3-7B4B76E47525}.Release|omap3530 (ARMV4I).Deploy.0 = Release|omap3530 (ARMV4I)
+		{F2B5D693-E8E9-4C14-A5D3-7B4B76E47525}.Release|Pocket PC 2003 (ARMV4).ActiveCfg = Release|Pocket PC 2003 (ARMV4)
+		{F2B5D693-E8E9-4C14-A5D3-7B4B76E47525}.Release|Pocket PC 2003 (ARMV4).Build.0 = Release|Pocket PC 2003 (ARMV4)
+		{F2B5D693-E8E9-4C14-A5D3-7B4B76E47525}.Release|Pocket PC 2003 (ARMV4).Deploy.0 = Release|Pocket PC 2003 (ARMV4)
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
