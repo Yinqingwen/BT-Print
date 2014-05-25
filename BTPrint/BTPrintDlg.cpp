@@ -321,6 +321,39 @@ void CBTPrintDlg::OnBnClickedButtonSearch()
 	::EnableWindow(::GetDlgItem(hWnd,IDC_BUTTON_SEARCH),FALSE);
 }
 
+static BOOL CALLBACK DlgProc2 (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    switch (uMsg) {
+    case WM_INITDIALOG:
+        SetWindowText (GetDlgItem (hWnd, IDC_CHANNEL), L"");
+        SetFocus (GetDlgItem (hWnd, IDC_CHANNEL));
+
+        return 0;
+
+    case WM_COMMAND:
+        {
+            int wID = LOWORD(wParam);
+            switch (wID)
+            {
+            case IDOK:
+                {
+                    WCHAR szChannel[64];
+                    GetWindowText (GetDlgItem (hWnd, IDC_CHANNEL), szChannel, 64);
+                    int c = _wtoi (szChannel);
+                    EndDialog (hWnd, c);
+                }
+                return 0;
+
+            case IDCANCEL:
+                EndDialog (hWnd, 0);
+                return 0;
+            }
+        }
+        break;
+    }
+
+    return 0;
+}
+
 void CBTPrintDlg::OnBnClickedButtonPrint()
 {
 	// TODO: Add your control notification handler code here
@@ -347,7 +380,7 @@ void CBTPrintDlg::OnBnClickedButtonPrint()
 			if(g_iSelectedDeviceIndex == i)
 			{
 				bt_addr = g_pLocalDeviceInfo[i].DeviceAddr;
-				nChannel = g_pLocalDeviceInfo[i].nChannel;
+				nChannel = objBthUtils.GetChannel(&bt_addr);
 				memcpy(DeviceName,g_pLocalDeviceInfo[i].DeviceName,sizeof(g_pLocalDeviceInfo[i].DeviceName));
 				break;
 			}
@@ -368,24 +401,34 @@ void CBTPrintDlg::OnBnClickedButtonPrint()
 		}
 	}
 
-	if(bt_addr>0 && nChannel>0)	//have
+	if(!nChannel)
 	{
-		nComPort=objBthUtils.BlueToothPairingAndCreateVirtualCom(bt_addr,nChannel,PIN);
-		if(nComPort >=0)
-		{
-			PrintTest(nComPort);
-			
-			//存储记录
-			objBthUtils.SetLocalDevice(&g_pLocalDeviceInfo[g_iSelectedDeviceIndex]);
-			objBthUtils.BluetoothVirtualComDestroy();//释放虚拟串口
-		}else
-		{
-			::MessageBox(NULL,_T("虚拟串口创建失败,请重试"),_T("Error"),MB_OK);
-			goto Exit;
-		}
+		nChannel= DialogBox(AfxGetInstanceHandle(),MAKEINTRESOURCE (IDD_ENTERCHANNEL), NULL, DlgProc2);
+	}
+
+	if(bt_addr <= 0)
+	{
+		::MessageBox(NULL,_T("蓝牙地址错误"),_T("Error"),0);
+		goto Exit;
+	}
+
+	if(nChannel <=0)
+	{
+		::MessageBox(NULL,_T("传输通道错误"),_T("Error"),0);
+		goto Exit;
+	}
+
+	nComPort=objBthUtils.BlueToothPairingAndCreateVirtualCom(bt_addr,nChannel,(PIN != NULL)?(PIN):(DEFAULT_PIN));
+	if(nComPort >=0)
+	{
+		PrintTest(nComPort);
+
+		//存储记录
+		objBthUtils.SetLocalDevice(&g_pLocalDeviceInfo[g_iSelectedDeviceIndex]);
+		objBthUtils.BluetoothVirtualComDestroy();//释放虚拟串口
 	}else
 	{
-		::MessageBox(NULL,_T("请选择蓝牙配对列表再试"),_T("Error"),MB_OK);
+		::MessageBox(NULL,_T("虚拟串口创建失败,请重试"),_T("Error"),MB_OK);
 		goto Exit;
 	}
 

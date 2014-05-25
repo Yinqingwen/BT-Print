@@ -39,7 +39,6 @@ struct DeviceList
 { 
 	TCHAR bthName[40];
 	BT_ADDR bthAddress;
-	int nChannel;
 	DeviceList *NextDevice;
 };
 
@@ -63,6 +62,7 @@ public:
 
 	BOOL BlueToothSearch(HWND hWnd);
 	int GetDeviceInfo(DeviceInfo *pPeerDevicesInfo);
+	int GetChannel(BT_ADDR *bt_addr);
 	int BlueToothPairingAndCreateVirtualCom(BT_ADDR bt_addr,int cChannel,CHAR *szPIN);
 	void BluetoothVirtualComDestroy(void);
 
@@ -86,7 +86,6 @@ private:
 	static DWORD WINAPI ReadData(LPVOID voidArg);
 	int IsRfcommUuid(NodeData *pNode) ;
 	int GetChannel (NodeData *pChannelNode) ;
-	int GetChannel(BT_ADDR *bt_addr);
 	HRESULT ServiceAndAttributeSearch(UCHAR *szResponse, DWORD cbResponse,ISdpRecord ***pppSdpRecords,ULONG *pNumRecords
     );
 };

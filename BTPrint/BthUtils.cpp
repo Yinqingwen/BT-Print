@@ -210,7 +210,6 @@ int BthUtils::DiscoverDevices()
 		m_iNumDevices++;
 		m_pEnd->bthAddress = ((SOCKADDR_BTH *)pwsaResults->lpcsaBuffer->RemoteAddr.lpSockaddr)->btAddr;
 		bHaveName = pwsaResults->lpszServiceInstanceName && *(pwsaResults->lpszServiceInstanceName);
-		m_pEnd->nChannel = GetChannel(&m_pEnd->bthAddress);		//提前获取通道
 		//If device name is available, add to node
 		StringCchPrintf(m_pEnd->bthName, sizeof(m_pEnd->bthName),L"%s",bHaveName ? pwsaResults->lpszServiceInstanceName : L"");
 	}
@@ -685,7 +684,6 @@ int BthUtils::GetDeviceInfo(DeviceInfo *pPeerDevicesInfo)
 	{
 		StringCchPrintf(pPeerDevicesInfo[iCtr].DeviceName,sizeof(pPeerDevicesInfo[iCtr].DeviceName),L"%s",m_pCurrentDevice->bthName);
 		pPeerDevicesInfo[iCtr].DeviceAddr=m_pCurrentDevice->bthAddress;
-		pPeerDevicesInfo[iCtr].nChannel =m_pCurrentDevice->nChannel;
 	}
 	return 0;
 }
@@ -797,10 +795,7 @@ static unsigned long BlueToothSearchThread(LPVOID param)
 int BthUtils::PairAndConnect(BT_ADDR bt_addr,int cChannel,CHAR *szPIN)
 {
 	//检查是否已经配对
-	if(m_socketClient == 1)
-	{
-		return 0;
-	}
+	
 	//从局部变量改为使用类成员变量
 	m_socketClient = socket(AF_BTH, SOCK_STREAM, BTHPROTO_RFCOMM);
 	if ( m_socketClient==INVALID_SOCKET ) {
